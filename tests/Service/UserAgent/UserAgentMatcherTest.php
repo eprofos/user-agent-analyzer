@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Eprofos\UserAgentAnalyzerBundle\Tests\Service\UserAgent;
 
 use Eprofos\UserAgentAnalyzerBundle\Service\UserAgent\UserAgentMatcher;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for UserAgentMatcher.

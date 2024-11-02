@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Eprofos\UserAgentAnalyzerBundle\Tests\Service\UserAgent;
 
 use Eprofos\UserAgentAnalyzerBundle\Service\UserAgent\MacOSVersionMapper;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for MacOSVersionMapper.
@@ -48,7 +48,7 @@ class MacOSVersionMapperTest extends TestCase
     public function testGetDarwinMacOSMap(): void
     {
         $map = $this->mapper->getDarwinMacOSMap();
-        
+
         $this->assertIsArray($map);
         $this->assertArrayHasKey('20.0', $map);
         $this->assertEquals('16', $map['20.0']); // Darwin 20.0 corresponds to MacOS 11 (Big Sur)
@@ -57,7 +57,7 @@ class MacOSVersionMapperTest extends TestCase
     public function testGetDarwinIOSMap(): void
     {
         $map = $this->mapper->getDarwinIOSMap();
-        
+
         $this->assertIsArray($map);
         $this->assertArrayHasKey('20.0', $map);
         $this->assertEquals('14', $map['20.0']); // Darwin 20.0 corresponds to iOS 14

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Eprofos\UserAgentAnalyzerBundle\Tests\Model;
 
 use Eprofos\UserAgentAnalyzerBundle\Model\UserAgentResult;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for UserAgentResult model.

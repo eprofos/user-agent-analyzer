@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Eprofos\UserAgentAnalyzerBundle\Tests\Service;
 
 use Eprofos\UserAgentAnalyzerBundle\Service\UserAgentAnalyzer;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -17,6 +17,7 @@ use Psr\Log\LoggerInterface;
 class UserAgentAnalyzerTest extends TestCase
 {
     private UserAgentAnalyzer $analyzer;
+
     private LoggerInterface $logger;
 
     protected function setUp(): void
