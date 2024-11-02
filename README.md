@@ -115,29 +115,6 @@ class YourController
 }
 ```
 
-### With Logging
-
-```php
-use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
-
-class YourService
-{
-    public function __construct(
-        private UserAgentAnalyzer $analyzer,
-        private LoggerInterface $logger,
-        private RequestStack $requestStack,
-    ) {}
-
-    public function analyzeCurrentUserAgent(): UserAgentResult
-    {
-        $userAgent = $this->requestStack->getCurrentRequest()->headers->get('User-Agent');
-        return $this->analyzer->analyze($userAgent);
-        // Logs will automatically be generated with PSR-3 logger
-    }
-}
-```
-
 ## Available Methods
 
 ### Operating System Information
