@@ -81,7 +81,7 @@ class UserAgentAnalyzer
     private function logInfo(string $message, array $context = []): void
     {
         if ($this->logger) {
-            $this->logger->info('[UserAgentBundle] '.$message, $context);
+            $this->logger->info('[UserAgentAnalyzerBundle] '.$message, $context);
         }
     }
 }
