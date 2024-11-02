@@ -31,14 +31,36 @@ class BrowserDetector
      */
     public function detect(): void
     {
-        $this->detectChromium();
-        $this->detectFirefox();
-        $this->detectCrossDeviceBrowsers();
-        $this->detectDesktopBrowsers();
-        $this->detectMobileBrowsers();
-        $this->detectWebView();
-        $this->detectSafariOriginal();
+        // Detect Edge first as it contains Chrome in its UA
+        $this->detectEdge();
+
+        if ($this->browserNeedContinue) {
+            $this->detectChromium();
+            $this->detectFirefox();
+            $this->detectCrossDeviceBrowsers();
+            $this->detectDesktopBrowsers();
+            $this->detectMobileBrowsers();
+            $this->detectWebView();
+            $this->detectSafariOriginal();
+        }
+
         $this->finalizeBrowserDetection();
+    }
+
+    /**
+     * Detect Edge browser specifically.
+     */
+    private function detectEdge(): void
+    {
+        if ($this->matcher->match('Edg/')) {
+            $matches = $this->matcher->match('/Edg\/([0-9]+)\./');
+
+            $this->result->setBrowserName('Edge')
+                        ->setBrowserVersion(! empty($matches[1]) ? (float) $matches[1] : 0)
+                        ->setBrowserChromiumVersion(! empty($matches[1]) ? (int) $matches[1] : 0);
+
+            $this->browserNeedContinue = false;
+        }
     }
 
     /**

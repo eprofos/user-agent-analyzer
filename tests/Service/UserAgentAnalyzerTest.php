@@ -18,6 +18,7 @@ class UserAgentAnalyzerTest extends TestCase
 {
     private const CHROME_WINDOWS_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36';
     private const SAFARI_MACOS_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15';
+    private const EDGE_WINDOWS_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0';
 
     private RequestStack $requestStack;
 
@@ -41,6 +42,18 @@ class UserAgentAnalyzerTest extends TestCase
         $this->assertEquals('10', $result->getOsVersion());
         $this->assertEquals('Chrome', $result->getBrowserName());
         $this->assertEquals('91.0', $result->getBrowserVersion());
+        $this->assertEquals('desktop', $result->getDeviceType());
+    }
+
+    public function testAnalyzeWithEdge(): void
+    {
+        $result = $this->analyzer->analyze(self::EDGE_WINDOWS_UA);
+
+        $this->assertInstanceOf(UserAgentResult::class, $result);
+        $this->assertEquals('Windows', $result->getOsName());
+        $this->assertEquals('10', $result->getOsVersion());
+        $this->assertEquals('Edge', $result->getBrowserName());
+        $this->assertEquals('130.0', $result->getBrowserVersion());
         $this->assertEquals('desktop', $result->getDeviceType());
     }
 
