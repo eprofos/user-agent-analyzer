@@ -13,3 +13,7 @@ services:
     # Make services public that need to be accessed directly
     Eprofos\UserAgentAnalyzerBundle\Service\UserAgentAnalyzer:
         public: true
+
+    # Register Twig extension
+    Eprofos\UserAgentAnalyzerBundle\Twig\UserAgentExtension:
+        tags: ['twig.extension']
