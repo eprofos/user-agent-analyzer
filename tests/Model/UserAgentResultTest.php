@@ -32,7 +32,7 @@ class UserAgentResultTest extends TestCase
         $this->assertEquals('unknown', $this->result->getBrowserName());
         $this->assertEquals(0, $this->result->getBrowserVersion());
         $this->assertEquals('unknown', $this->result->getBrowserTitle());
-        
+
         // Test default boolean values
         $this->assertFalse($this->result->isBrowserChromeOriginal());
         $this->assertFalse($this->result->isBrowserFirefoxOriginal());
