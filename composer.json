@@ -1,0 +1,84 @@
+{
+    "name": "eprofos/user-agent-analyzer",
+    "type": "symfony-bundle",
+    "description": "A powerful Symfony bundle for user-agent analysis. It provides accurate detection of operating systems (Windows, MacOS, Linux, iOS, Android...), browsers (Chrome, Firefox, Safari...), and device types (Desktop, Mobile, Tablet, TV...). Supports specific version detection and includes advanced handling of special cases like WebViews and compatibility modes. Features comprehensive logging and detailed analysis results.",
+    "keywords": [
+        "symfony",
+        "bundle",
+        "user-agent",
+        "browser",
+        "device",
+        "os",
+        "detection",
+        "parser",
+        "analyzer",
+        "mobile",
+        "desktop",
+        "platform"
+    ],
+    "homepage": "https://github.com/eprofos/user-agent-analyzer",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EPROFOS",
+            "email": "contact@eprofos.com",
+            "homepage": "https://www.eprofos.com",
+            "role": "Company"
+        },
+        {
+            "name": "Houssem TAYECH",
+            "email": "houssem@eprofos.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "symfony/framework-bundle": "^7.0",
+        "symfony/dependency-injection": "^7.0",
+        "symfony/http-kernel": "^7.0",
+        "symfony/config": "^7.0",
+        "psr/log": "^3.0",
+        "symfony/yaml": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "symfony/phpunit-bridge": "^7.0",
+        "symfony/test-pack": "^1.0",
+        "phpstan/phpstan": "^1.10",
+        "friendsofphp/php-cs-fixer": "^3.0"
+    },
+    "suggest": {
+        "ext-intl": "For better locale handling",
+        "monolog/monolog": "For advanced logging capabilities"
+    },
+    "autoload": {
+        "psr-4": {
+            "Eprofos\\UserAgentAnalyzerBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Eprofos\\UserAgentAnalyzerBundle\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "phpstan": "vendor/bin/phpstan analyse",
+        "cs-fix": "vendor/bin/php-cs-fixer fix",
+        "cs-check": "vendor/bin/php-cs-fixer fix --dry-run --diff",
+        "analyze": [
+            "@phpstan",
+            "@cs-check"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "version": "1.0.0"
+}

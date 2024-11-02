@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Eprofos\UserAgentAnalyzerBundle\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/EprofosUserAgentAnalyzerBundle.php'
+
+    # Make services public that need to be accessed directly
+    Eprofos\UserAgentAnalyzerBundle\Service\UserAgentAnalyzer:
+        public: true

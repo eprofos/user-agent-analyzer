@@ -1,0 +1,37 @@
+# PHP
+/vendor/
+composer.phar
+composer.lock
+.php-cs-fixer.cache
+.phpunit.result.cache
+.phpunit.cache
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Symfony
+/var/
+/logs/
+.env.local
+.env.*.local
+
+# Testing
+/coverage/
+.phpunit.cache/
+phpunit.xml
+
+# Build
+/build/
+
+# Cache
+*.cache
