@@ -11,6 +11,7 @@ use Eprofos\UserAgentAnalyzerBundle\Service\UserAgent\Detector\OSDetector;
 use Eprofos\UserAgentAnalyzerBundle\Service\UserAgent\MacOSVersionMapper;
 use Eprofos\UserAgentAnalyzerBundle\Service\UserAgent\UserAgentMatcher;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Service for analyzing user agent strings.
@@ -21,9 +22,37 @@ class UserAgentAnalyzer
 {
     private ?LoggerInterface $logger;
 
-    public function __construct(?LoggerInterface $logger = null)
-    {
+    private RequestStack $requestStack;
+
+    public function __construct(
+        RequestStack $requestStack,
+        ?LoggerInterface $logger = null
+    ) {
+        $this->requestStack = $requestStack;
         $this->logger = $logger;
+    }
+
+    /**
+     * Analyze the user agent from the current request.
+     *
+     * @param bool $touchSupportMode Enable touch support mode detection
+     *
+     * @return UserAgentResult The analysis result
+     */
+    public function analyzeCurrentRequest(bool $touchSupportMode = false): UserAgentResult
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        if (null === $request) {
+            $this->logInfo('No current request found, returning empty result');
+
+            return new UserAgentResult();
+        }
+
+        $userAgent = $request->headers->get('User-Agent', '');
+        $this->logInfo('Analyzing user agent from current request', ['user_agent' => $userAgent]);
+
+        return $this->analyze($userAgent, $touchSupportMode);
     }
 
     /**

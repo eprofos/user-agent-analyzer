@@ -30,6 +30,7 @@ A powerful Symfony bundle for user-agent analysis. It provides accurate detectio
   - WebView detection for Android and iOS
 
 - **Advanced Features**
+  - Automatic User-Agent detection from current request
   - Comprehensive logging support
   - High accuracy through multiple detection methods
   - Easy integration with Symfony applications
@@ -66,19 +67,12 @@ return [
 
 ```php
 use Eprofos\UserAgentAnalyzerBundle\Service\UserAgentAnalyzer;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class YourController
 {
-    public function someAction(
-        UserAgentAnalyzer $analyzer,
-        RequestStack $requestStack
-    ) {
-        // Get user agent string from current request
-        $userAgent = $requestStack->getCurrentRequest()->headers->get('User-Agent');
-        
-        // Analyze user agent
-        $result = $analyzer->analyze($userAgent);
+    public function someAction(UserAgentAnalyzer $analyzer)
+    {
+        $result = $analyzer->analyzeCurrentRequest();
         
         // Access the results
         $osName = $result->getOsName();           // e.g., "Windows"
@@ -100,7 +94,7 @@ class YourController
 ### Advanced Usage with Touch Support Mode
 
 ```php
-use Symfony\Component\HttpFoundation\Request;
+use Eprofos\UserAgentAnalyzerBundle\Service\UserAgentAnalyzer;
 
 class YourController
 {
@@ -108,7 +102,11 @@ class YourController
         UserAgentAnalyzer $analyzer,
         Request $request
     ) {
-        // Get user agent and analyze with touch support
+    {
+        // Analyze current request with touch support detection
+        $result = $analyzer->analyzeCurrentRequest(true);
+
+        // Or analyze specific user agent with touch support
         $userAgent = $request->headers->get('User-Agent');
         $result = $analyzer->analyze($userAgent, true);
 

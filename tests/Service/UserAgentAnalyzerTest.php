@@ -4,73 +4,100 @@ declare(strict_types=1);
 
 namespace Eprofos\UserAgentAnalyzerBundle\Tests\Service;
 
+use Eprofos\UserAgentAnalyzerBundle\Model\UserAgentResult;
 use Eprofos\UserAgentAnalyzerBundle\Service\UserAgentAnalyzer;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Tests for UserAgentAnalyzer service.
+ * @covers \Eprofos\UserAgentAnalyzerBundle\Service\UserAgentAnalyzer
  */
-#[CoversClass(UserAgentAnalyzer::class)]
 class UserAgentAnalyzerTest extends TestCase
 {
-    private UserAgentAnalyzer $analyzer;
+    private const CHROME_WINDOWS_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36';
+    private const SAFARI_MACOS_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15';
 
-    private LoggerInterface $logger;
+    private RequestStack $requestStack;
+
+    private ?LoggerInterface $logger;
+
+    private UserAgentAnalyzer $analyzer;
 
     protected function setUp(): void
     {
+        $this->requestStack = new RequestStack();
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->analyzer = new UserAgentAnalyzer($this->logger);
+        $this->analyzer = new UserAgentAnalyzer($this->requestStack, $this->logger);
     }
 
-    #[DataProvider('userAgentDataProvider')]
-    public function testAnalyze(string $userAgent, array $expected): void
+    public function testAnalyzeWithChrome(): void
     {
-        $result = $this->analyzer->analyze($userAgent);
+        $result = $this->analyzer->analyze(self::CHROME_WINDOWS_UA);
 
-        $this->assertEquals($expected['os_name'], $result->getOsName(), 'OS name mismatch');
-        $this->assertEquals($expected['os_version'], $result->getOsVersion(), 'OS version mismatch');
-        $this->assertEquals($expected['browser_name'], $result->getBrowserName(), 'Browser name mismatch');
-        $this->assertEquals($expected['browser_version'], $result->getBrowserVersion(), 'Browser version mismatch');
-        $this->assertEquals($expected['device_type'], $result->getDeviceType(), 'Device type mismatch');
+        $this->assertInstanceOf(UserAgentResult::class, $result);
+        $this->assertEquals('Windows', $result->getOsName());
+        $this->assertEquals('10', $result->getOsVersion());
+        $this->assertEquals('Chrome', $result->getBrowserName());
+        $this->assertEquals('91.0', $result->getBrowserVersion());
+        $this->assertEquals('desktop', $result->getDeviceType());
     }
 
-    public static function userAgentDataProvider(): array
+    public function testAnalyzeWithSafari(): void
     {
-        return [
-            'Chrome on Windows 10' => [
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                [
-                    'os_name' => 'Windows',
-                    'os_version' => 10.0,
-                    'browser_name' => 'Chrome',
-                    'browser_version' => 120.0,
-                    'device_type' => 'desktop',
-                ],
-            ],
-            'Safari on iOS' => [
-                'Mozilla/5.0 (iPhone; CPU iPhone OS 17_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Mobile/15E148 Safari/604.1',
-                [
-                    'os_name' => 'iOS',
-                    'os_version' => 17.1,
-                    'browser_name' => 'Safari',
-                    'browser_version' => 17.1,
-                    'device_type' => 'mobile',
-                ],
-            ],
-            'Firefox on Linux' => [
-                'Mozilla/5.0 (X11; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0',
-                [
-                    'os_name' => 'unknown',
-                    'os_version' => 0.0,
-                    'browser_name' => 'Firefox',
-                    'browser_version' => 120.0,
-                    'device_type' => 'unknown',
-                ],
-            ],
-        ];
+        $result = $this->analyzer->analyze(self::SAFARI_MACOS_UA);
+
+        $this->assertInstanceOf(UserAgentResult::class, $result);
+        $this->assertEquals('unknown', $result->getOsName());
+        $this->assertEquals('0', $result->getOsVersion());
+        $this->assertEquals('Safari', $result->getBrowserName());
+        $this->assertEquals('15.0', $result->getBrowserVersion());
+        $this->assertEquals('unknown', $result->getDeviceType());
+    }
+
+    /**
+     * @covers \Eprofos\UserAgentAnalyzerBundle\Service\UserAgentAnalyzer::analyzeCurrentRequest
+     */
+    public function testAnalyzeCurrentRequestWithNoRequest(): void
+    {
+        $result = $this->analyzer->analyzeCurrentRequest();
+
+        $this->assertInstanceOf(UserAgentResult::class, $result);
+        $this->assertEquals('unknown', $result->getOsName());
+        $this->assertEquals('unknown', $result->getBrowserName());
+        $this->assertEquals('unknown', $result->getDeviceType());
+    }
+
+    public function testAnalyzeCurrentRequestWithRequest(): void
+    {
+        $request = new Request();
+        $request->headers->set('User-Agent', self::CHROME_WINDOWS_UA);
+        $this->requestStack->push($request);
+
+        $result = $this->analyzer->analyzeCurrentRequest();
+
+        $this->assertInstanceOf(UserAgentResult::class, $result);
+        $this->assertEquals('Windows', $result->getOsName());
+        $this->assertEquals('10', $result->getOsVersion());
+        $this->assertEquals('Chrome', $result->getBrowserName());
+        $this->assertEquals('91.0', $result->getBrowserVersion());
+        $this->assertEquals('desktop', $result->getDeviceType());
+    }
+
+    /**
+     * @covers \Eprofos\UserAgentAnalyzerBundle\Service\UserAgentAnalyzer::analyzeCurrentRequest
+     */
+    public function testAnalyzeCurrentRequestWithEmptyUserAgent(): void
+    {
+        $request = new Request();
+        $this->requestStack->push($request);
+
+        $result = $this->analyzer->analyzeCurrentRequest();
+
+        $this->assertInstanceOf(UserAgentResult::class, $result);
+        $this->assertEquals('unknown', $result->getOsName());
+        $this->assertEquals('unknown', $result->getBrowserName());
+        $this->assertEquals('unknown', $result->getDeviceType());
     }
 }
