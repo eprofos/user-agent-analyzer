@@ -32,7 +32,7 @@
         }
     ],
     "require": {
-        "php": ">=8.3",
+        "php": ">=8.2",
         "symfony/framework-bundle": "^7.0",
         "symfony/dependency-injection": "^7.0",
         "symfony/http-kernel": "^7.0",
@@ -80,5 +80,5 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
-    "version": "1.0.0"
+    "version": "1.0.1"
 }
