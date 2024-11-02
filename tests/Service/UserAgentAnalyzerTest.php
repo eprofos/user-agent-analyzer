@@ -100,4 +100,24 @@ class UserAgentAnalyzerTest extends TestCase
         $this->assertEquals('unknown', $result->getBrowserName());
         $this->assertEquals('unknown', $result->getDeviceType());
     }
+
+    public function testAnalyzeWithNullUserAgent(): void
+    {
+        $result = $this->analyzer->analyze(null);
+
+        $this->assertInstanceOf(UserAgentResult::class, $result);
+        $this->assertEquals('unknown', $result->getOsName());
+        $this->assertEquals('unknown', $result->getBrowserName());
+        $this->assertEquals('unknown', $result->getDeviceType());
+    }
+
+    public function testAnalyzeWithEmptyUserAgent(): void
+    {
+        $result = $this->analyzer->analyze('');
+
+        $this->assertInstanceOf(UserAgentResult::class, $result);
+        $this->assertEquals('unknown', $result->getOsName());
+        $this->assertEquals('unknown', $result->getBrowserName());
+        $this->assertEquals('unknown', $result->getDeviceType());
+    }
 }

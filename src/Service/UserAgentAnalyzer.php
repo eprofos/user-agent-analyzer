@@ -58,16 +58,24 @@ class UserAgentAnalyzer
     /**
      * Analyze a user agent string and return detailed information.
      *
-     * @param string $userAgent        The user agent string to analyze
-     * @param bool   $touchSupportMode Enable touch support mode detection
+     * @param string|null $userAgent        The user agent string to analyze, null will be treated as empty string
+     * @param bool        $touchSupportMode Enable touch support mode detection
      *
      * @return UserAgentResult The analysis result
      */
-    public function analyze(string $userAgent, bool $touchSupportMode = false): UserAgentResult
+    public function analyze(?string $userAgent, bool $touchSupportMode = false): UserAgentResult
     {
+        $userAgent ??= '';
         $this->logInfo('Starting user agent analysis', ['user_agent' => $userAgent]);
 
         $result = new UserAgentResult();
+
+        if ('' === $userAgent) {
+            $this->logInfo('Empty user agent string provided, returning default result');
+
+            return $result;
+        }
+
         $matcher = new UserAgentMatcher($userAgent);
         $macOSMapper = new MacOSVersionMapper();
 
