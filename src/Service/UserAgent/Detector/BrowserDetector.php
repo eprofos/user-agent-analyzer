@@ -79,7 +79,7 @@ class BrowserDetector
 
             if ($this->matcher->match('/Gecko\)\s(Chrome|CrMo)\/(\d+\.\d+\.\d+\.\d+)\s(?:Mobile)?(?:\/[.0-9A-Za-z]+\s|\s)?Safari\/[.0-9]+$/')
                 && ! $this->matcher->match('SalamWeb|Valve|Vivaldi|Brave|Edge|Opera|YaBrowser')) {
-                $this->result->setBrowserChromeOriginal(1);
+                $this->result->setIsBrowserChromeOriginal(true);
             }
 
             $this->browserNeedContinue = false;
@@ -124,7 +124,7 @@ class BrowserDetector
                         ->setBrowserVersion(! empty($matches[1]) ? (float) $matches[1] : 0);
 
             if ('Firefox' === $browserName && $this->matcher->match('/\)\sGecko\/[.0-9]+\sFirefox\/[.0-9]+$/')) {
-                $this->result->setBrowserFirefoxOriginal(1);
+                $this->result->setIsBrowserFirefoxOriginal(true);
             }
 
             $this->browserNeedContinue = false;
@@ -137,8 +137,8 @@ class BrowserDetector
     private function detectCrossDeviceBrowsers(): void
     {
         if (! $this->browserNeedContinue
-            || 1 === $this->result->getBrowserChromeOriginal()
-            || 1 === $this->result->getBrowserFirefoxOriginal()) {
+            || $this->result->isBrowserChromeOriginal()
+            || $this->result->isBrowserFirefoxOriginal()) {
             return;
         }
 
@@ -246,7 +246,7 @@ class BrowserDetector
                     if ($ev > 535) {
                         $this->result->setBrowserVersion(6.0);
                     }
-                    $this->result->setBrowserSafariOriginal(1);
+                    $this->result->setIsBrowserSafariOriginal(true);
                 }
 
                 // IE Trident engine version conversion
@@ -334,17 +334,17 @@ class BrowserDetector
         // Android WebView
         if ('Android' === $this->result->getOsName()) {
             if ($this->matcher->match('; wv|;FB|FB_IAB|OKApp')) {
-                $this->result->setBrowserAndroidWebview(1);
+                $this->result->setIsBrowserAndroidWebview(true);
             }
-            if (0 === $this->result->getBrowserChromeOriginal()
-                && 0 !== $this->result->getBrowserChromiumVersion()
+            if (false === $this->result->isBrowserChromeOriginal()
+                && false !== $this->result->getBrowserChromiumVersion()
                 && $this->matcher->match('/like\sGecko\)\sVersion\/[.0-9]+\sChrome\/[.0-9]+\s/')) {
-                $this->result->setBrowserAndroidWebview(1);
+                $this->result->setIsBrowserAndroidWebview(true);
             }
         }
 
         // iOS WebView
-        if ($this->result->getResultIos()) {
+        if ($this->result->isResultIos()) {
             $webkitWebview = false;
 
             if (! $this->matcher->match('CriOS|FxiOS|OPiOS')
@@ -358,7 +358,7 @@ class BrowserDetector
             }
 
             if ($webkitWebview) {
-                $this->result->setBrowserIosWebview(1);
+                $this->result->setIsBrowserIosWebview(true);
 
                 if ('unknown' === $this->result->getBrowserName()) {
                     $this->result->setBrowserName('WebKit WebView')
@@ -375,7 +375,7 @@ class BrowserDetector
     {
         if ('Safari' === $this->result->getBrowserName() || 'Safari Mobile' === $this->result->getBrowserName()) {
             if ($this->matcher->match('/AppleWebKit\/[.0-9]+.*Gecko\)\sVersion\/[.0-9].*Safari\/[.0-9A-Za-z]+$/')) {
-                $this->result->setBrowserSafariOriginal(1);
+                $this->result->setIsBrowserSafariOriginal(true);
             }
         }
     }

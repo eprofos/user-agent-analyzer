@@ -29,11 +29,11 @@ class UserAgentResult
 
     private string $browserTitle = 'unknown';
 
-    private int $browserChromeOriginal = 0;
+    private bool $isBrowserChromeOriginal = false;
 
-    private int $browserFirefoxOriginal = 0;
+    private bool $isBrowserFirefoxOriginal = false;
 
-    private int $browserSafariOriginal = 0;
+    private bool $isBrowserSafariOriginal = false;
 
     private int $browserChromiumVersion = 0;
 
@@ -41,17 +41,17 @@ class UserAgentResult
 
     private float $browserWebkitVersion = 0;
 
-    private int $browserAndroidWebview = 0;
+    private bool $isBrowserAndroidWebview = false;
 
-    private int $browserIosWebview = 0;
+    private bool $isBrowserIosWebview = false;
 
-    private int $browserDesktopMode = 0;
+    private bool $isBrowserDesktopMode = false;
 
-    private int $bits64Mode = 0;
+    private bool $is64BitsMode = false;
 
     private int $macosVersionMinor = 0;
 
-    private bool $resultIos = false;
+    private bool $isResultIos = false;
 
     /**
      * Get the value of osType.
@@ -216,55 +216,55 @@ class UserAgentResult
     }
 
     /**
-     * Get the value of browserChromeOriginal.
+     * Check if browser is original Chrome.
      */
-    public function getBrowserChromeOriginal(): int
+    public function isBrowserChromeOriginal(): bool
     {
-        return $this->browserChromeOriginal;
+        return $this->isBrowserChromeOriginal;
     }
 
     /**
-     * Set the value of browserChromeOriginal.
+     * Set if browser is original Chrome.
      */
-    public function setBrowserChromeOriginal(int $browserChromeOriginal): self
+    public function setIsBrowserChromeOriginal(bool $isBrowserChromeOriginal): self
     {
-        $this->browserChromeOriginal = $browserChromeOriginal;
+        $this->isBrowserChromeOriginal = $isBrowserChromeOriginal;
 
         return $this;
     }
 
     /**
-     * Get the value of browserFirefoxOriginal.
+     * Check if browser is original Firefox.
      */
-    public function getBrowserFirefoxOriginal(): int
+    public function isBrowserFirefoxOriginal(): bool
     {
-        return $this->browserFirefoxOriginal;
+        return $this->isBrowserFirefoxOriginal;
     }
 
     /**
-     * Set the value of browserFirefoxOriginal.
+     * Set if browser is original Firefox.
      */
-    public function setBrowserFirefoxOriginal(int $browserFirefoxOriginal): self
+    public function setIsBrowserFirefoxOriginal(bool $isBrowserFirefoxOriginal): self
     {
-        $this->browserFirefoxOriginal = $browserFirefoxOriginal;
+        $this->isBrowserFirefoxOriginal = $isBrowserFirefoxOriginal;
 
         return $this;
     }
 
     /**
-     * Get the value of browserSafariOriginal.
+     * Check if browser is original Safari.
      */
-    public function getBrowserSafariOriginal(): int
+    public function isBrowserSafariOriginal(): bool
     {
-        return $this->browserSafariOriginal;
+        return $this->isBrowserSafariOriginal;
     }
 
     /**
-     * Set the value of browserSafariOriginal.
+     * Set if browser is original Safari.
      */
-    public function setBrowserSafariOriginal(int $browserSafariOriginal): self
+    public function setIsBrowserSafariOriginal(bool $isBrowserSafariOriginal): self
     {
-        $this->browserSafariOriginal = $browserSafariOriginal;
+        $this->isBrowserSafariOriginal = $isBrowserSafariOriginal;
 
         return $this;
     }
@@ -324,73 +324,73 @@ class UserAgentResult
     }
 
     /**
-     * Get the value of browserAndroidWebview.
+     * Check if browser is Android WebView.
      */
-    public function getBrowserAndroidWebview(): int
+    public function isBrowserAndroidWebview(): bool
     {
-        return $this->browserAndroidWebview;
+        return $this->isBrowserAndroidWebview;
     }
 
     /**
-     * Set the value of browserAndroidWebview.
+     * Set if browser is Android WebView.
      */
-    public function setBrowserAndroidWebview(int $browserAndroidWebview): self
+    public function setIsBrowserAndroidWebview(bool $isBrowserAndroidWebview): self
     {
-        $this->browserAndroidWebview = $browserAndroidWebview;
+        $this->isBrowserAndroidWebview = $isBrowserAndroidWebview;
 
         return $this;
     }
 
     /**
-     * Get the value of browserIosWebview.
+     * Check if browser is iOS WebView.
      */
-    public function getBrowserIosWebview(): int
+    public function isBrowserIosWebview(): bool
     {
-        return $this->browserIosWebview;
+        return $this->isBrowserIosWebview;
     }
 
     /**
-     * Set the value of browserIosWebview.
+     * Set if browser is iOS WebView.
      */
-    public function setBrowserIosWebview(int $browserIosWebview): self
+    public function setIsBrowserIosWebview(bool $isBrowserIosWebview): self
     {
-        $this->browserIosWebview = $browserIosWebview;
+        $this->isBrowserIosWebview = $isBrowserIosWebview;
 
         return $this;
     }
 
     /**
-     * Get the value of browserDesktopMode.
+     * Check if browser is in desktop mode.
      */
-    public function getBrowserDesktopMode(): int
+    public function isBrowserDesktopMode(): bool
     {
-        return $this->browserDesktopMode;
+        return $this->isBrowserDesktopMode;
     }
 
     /**
-     * Set the value of browserDesktopMode.
+     * Set if browser is in desktop mode.
      */
-    public function setBrowserDesktopMode(int $browserDesktopMode): self
+    public function setIsBrowserDesktopMode(bool $isBrowserDesktopMode): self
     {
-        $this->browserDesktopMode = $browserDesktopMode;
+        $this->isBrowserDesktopMode = $isBrowserDesktopMode;
 
         return $this;
     }
 
     /**
-     * Get the value of bits64Mode.
+     * Check if system is in 64-bits mode.
      */
-    public function getBits64Mode(): int
+    public function is64BitsMode(): bool
     {
-        return $this->bits64Mode;
+        return $this->is64BitsMode;
     }
 
     /**
-     * Set the value of bits64Mode.
+     * Set if system is in 64-bits mode.
      */
-    public function setBits64Mode(int $bits64Mode): self
+    public function setIs64BitsMode(bool $is64BitsMode): self
     {
-        $this->bits64Mode = $bits64Mode;
+        $this->is64BitsMode = $is64BitsMode;
 
         return $this;
     }
@@ -414,19 +414,19 @@ class UserAgentResult
     }
 
     /**
-     * Get the value of resultIos.
+     * Check if result is iOS.
      */
-    public function getResultIos(): bool
+    public function isResultIos(): bool
     {
-        return $this->resultIos;
+        return $this->isResultIos;
     }
 
     /**
-     * Set the value of resultIos.
+     * Set if result is iOS.
      */
-    public function setResultIos(bool $resultIos): self
+    public function setIsResultIos(bool $isResultIos): self
     {
-        $this->resultIos = $resultIos;
+        $this->isResultIos = $isResultIos;
 
         return $this;
     }
@@ -434,7 +434,7 @@ class UserAgentResult
     /**
      * Convert the result to an array.
      *
-     * @return array<string, string|float|int>
+     * @return array<string, string|float|int|bool>
      */
     public function toArray(): array
     {
@@ -448,16 +448,16 @@ class UserAgentResult
             'browser_name' => $this->browserName,
             'browser_version' => $this->browserVersion,
             'browser_title' => $this->browserTitle,
-            'browser_chrome_original' => $this->browserChromeOriginal,
-            'browser_firefox_original' => $this->browserFirefoxOriginal,
-            'browser_safari_original' => $this->browserSafariOriginal,
+            'is_browser_chrome_original' => $this->isBrowserChromeOriginal,
+            'is_browser_firefox_original' => $this->isBrowserFirefoxOriginal,
+            'is_browser_safari_original' => $this->isBrowserSafariOriginal,
             'browser_chromium_version' => $this->browserChromiumVersion,
             'browser_gecko_version' => $this->browserGeckoVersion,
             'browser_webkit_version' => $this->browserWebkitVersion,
-            'browser_android_webview' => $this->browserAndroidWebview,
-            'browser_ios_webview' => $this->browserIosWebview,
-            'browser_desktop_mode' => $this->browserDesktopMode,
-            '64bits_mode' => $this->bits64Mode,
+            'is_browser_android_webview' => $this->isBrowserAndroidWebview,
+            'is_browser_ios_webview' => $this->isBrowserIosWebview,
+            'is_browser_desktop_mode' => $this->isBrowserDesktopMode,
+            'is_64bits_mode' => $this->is64BitsMode,
         ];
     }
 }

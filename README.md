@@ -108,9 +108,9 @@ class YourController
         $result = $analyzer->analyze($userAgent, true);
 
         // Check for specific browser features
-        $isWebView = $result->getBrowserAndroidWebview() || $result->getBrowserIosWebview();
-        $isDesktopMode = $result->getBrowserDesktopMode();
-        $is64Bit = $result->getBits64Mode();
+        $isWebView = $result->isBrowserAndroidWebview() || $result->isBrowserIosWebview();
+        $isDesktopMode = $result->isBrowserDesktopMode();
+        $is64Bit = $result->is64BitsMode();
     }
 }
 ```
@@ -131,13 +131,16 @@ class YourController
 - `getBrowserChromiumVersion()`: Get Chromium version if applicable
 - `getBrowserGeckoVersion()`: Get Gecko version if applicable
 - `getBrowserWebkitVersion()`: Get WebKit version if applicable
+- `isBrowserChromeOriginal()`: Check if browser is original Chrome
+- `isBrowserFirefoxOriginal()`: Check if browser is original Firefox
+- `isBrowserSafariOriginal()`: Check if browser is original Safari
 
 ### Device Information
 - `getDeviceType()`: Get device type
-- `getBrowserAndroidWebview()`: Check if Android WebView
-- `getBrowserIosWebview()`: Check if iOS WebView
-- `getBrowserDesktopMode()`: Check if desktop mode
-- `getBits64Mode()`: Check if 64-bit mode
+- `isBrowserAndroidWebview()`: Check if Android WebView
+- `isBrowserIosWebview()`: Check if iOS WebView
+- `isBrowserDesktopMode()`: Check if desktop mode
+- `is64BitsMode()`: Check if 64-bit mode
 
 ## Testing
 

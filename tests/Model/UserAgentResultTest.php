@@ -32,6 +32,16 @@ class UserAgentResultTest extends TestCase
         $this->assertEquals('unknown', $this->result->getBrowserName());
         $this->assertEquals(0, $this->result->getBrowserVersion());
         $this->assertEquals('unknown', $this->result->getBrowserTitle());
+
+        // Test default boolean values
+        $this->assertFalse($this->result->isBrowserChromeOriginal());
+        $this->assertFalse($this->result->isBrowserFirefoxOriginal());
+        $this->assertFalse($this->result->isBrowserSafariOriginal());
+        $this->assertFalse($this->result->isBrowserAndroidWebview());
+        $this->assertFalse($this->result->isBrowserIosWebview());
+        $this->assertFalse($this->result->isBrowserDesktopMode());
+        $this->assertFalse($this->result->is64BitsMode());
+        $this->assertFalse($this->result->isResultIos());
     }
 
     public function testSettersAndGetters(): void
@@ -57,6 +67,27 @@ class UserAgentResultTest extends TestCase
         $this->assertEquals('Chrome 120.0', $this->result->getBrowserTitle());
     }
 
+    public function testBooleanSettersAndGetters(): void
+    {
+        $this->result->setIsBrowserChromeOriginal(true)
+            ->setIsBrowserFirefoxOriginal(true)
+            ->setIsBrowserSafariOriginal(true)
+            ->setIsBrowserAndroidWebview(true)
+            ->setIsBrowserIosWebview(true)
+            ->setIsBrowserDesktopMode(true)
+            ->setIs64BitsMode(true)
+            ->setIsResultIos(true);
+
+        $this->assertTrue($this->result->isBrowserChromeOriginal());
+        $this->assertTrue($this->result->isBrowserFirefoxOriginal());
+        $this->assertTrue($this->result->isBrowserSafariOriginal());
+        $this->assertTrue($this->result->isBrowserAndroidWebview());
+        $this->assertTrue($this->result->isBrowserIosWebview());
+        $this->assertTrue($this->result->isBrowserDesktopMode());
+        $this->assertTrue($this->result->is64BitsMode());
+        $this->assertTrue($this->result->isResultIos());
+    }
+
     public function testToArray(): void
     {
         $this->result->setOsType('desktop')
@@ -65,7 +96,14 @@ class UserAgentResultTest extends TestCase
             ->setOsVersion(10.0)
             ->setDeviceType('desktop')
             ->setBrowserName('Chrome')
-            ->setBrowserVersion(120.0);
+            ->setBrowserVersion(120.0)
+            ->setIsBrowserChromeOriginal(true)
+            ->setIsBrowserFirefoxOriginal(false)
+            ->setIsBrowserSafariOriginal(false)
+            ->setIsBrowserAndroidWebview(false)
+            ->setIsBrowserIosWebview(false)
+            ->setIsBrowserDesktopMode(true)
+            ->setIs64BitsMode(true);
 
         $array = $this->result->toArray();
 
@@ -77,5 +115,12 @@ class UserAgentResultTest extends TestCase
         $this->assertEquals('desktop', $array['device_type']);
         $this->assertEquals('Chrome', $array['browser_name']);
         $this->assertEquals(120.0, $array['browser_version']);
+        $this->assertTrue($array['is_browser_chrome_original']);
+        $this->assertFalse($array['is_browser_firefox_original']);
+        $this->assertFalse($array['is_browser_safari_original']);
+        $this->assertFalse($array['is_browser_android_webview']);
+        $this->assertFalse($array['is_browser_ios_webview']);
+        $this->assertTrue($array['is_browser_desktop_mode']);
+        $this->assertTrue($array['is_64bits_mode']);
     }
 }

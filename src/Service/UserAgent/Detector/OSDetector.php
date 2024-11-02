@@ -56,12 +56,12 @@ class OSDetector
             if ($this->matcher->match('X11; Linux x86_64|X11; Linux aarch64|X11; U; U; Linux x86_64')
                 && ! $this->matcher->match('Qt|Arora|Ubuntu|Debian|Fedora|Linux Mint|elementary OS')) {
                 $this->result->setOsName('Android')
-                            ->setBrowserDesktopMode(1);
+                            ->setIsBrowserDesktopMode(true);
             }
 
             if ($this->matcher->match('Intel Mac OS X')) {
                 $this->result->setOsName('iOS')
-                            ->setBrowserDesktopMode(1);
+                            ->setIsBrowserDesktopMode(true);
             }
         }
 
@@ -107,7 +107,7 @@ class OSDetector
                 }
 
                 if ('iOS' === $name) {
-                    $this->result->setResultIos(true);
+                    $this->result->setIsResultIos(true);
                 }
 
                 $this->osNeedContinue = false;
@@ -259,7 +259,7 @@ class OSDetector
         } else {
             $this->result->setOsType('mobile')
                         ->setOsName('iOS')
-                        ->setResultIos(true);
+                        ->setIsResultIos(true);
         }
 
         $matches = $this->matcher->match('/\sDarwin(\s|\/)([0-9]+\.[0-9]+)/');
