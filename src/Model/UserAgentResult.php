@@ -162,6 +162,30 @@ class UserAgentResult
     }
 
     /**
+     * Check if device is mobile.
+     */
+    public function isMobile(): bool
+    {
+        return 'mobile' === $this->deviceType;
+    }
+
+    /**
+     * Check if device is desktop.
+     */
+    public function isDesktop(): bool
+    {
+        return 'desktop' === $this->deviceType;
+    }
+
+    /**
+     * Check if device is tablet.
+     */
+    public function isTablet(): bool
+    {
+        return 'tablet' === $this->deviceType;
+    }
+
+    /**
      * Get the value of browserName.
      */
     public function getBrowserName(): string

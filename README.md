@@ -86,6 +86,11 @@ class YourController
         $browserName = $result->getBrowserName(); // e.g., "Chrome"
         $deviceType = $result->getDeviceType();   // e.g., "desktop"
         
+        // Check device type
+        $isMobile = $result->isMobile();    // true if device is mobile
+        $isDesktop = $result->isDesktop();  // true if device is desktop
+        $isTablet = $result->isTablet();    // true if device is tablet
+        
         // Get all information as array
         $allInfo = $result->toArray();
     }
@@ -137,6 +142,9 @@ class YourController
 
 ### Device Information
 - `getDeviceType()`: Get device type
+- `isMobile()`: Check if device is mobile
+- `isDesktop()`: Check if device is desktop
+- `isTablet()`: Check if device is tablet
 - `isBrowserAndroidWebview()`: Check if Android WebView
 - `isBrowserIosWebview()`: Check if iOS WebView
 - `isBrowserDesktopMode()`: Check if desktop mode

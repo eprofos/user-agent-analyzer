@@ -32,7 +32,7 @@ class UserAgentResultTest extends TestCase
         $this->assertEquals('unknown', $this->result->getBrowserName());
         $this->assertEquals(0, $this->result->getBrowserVersion());
         $this->assertEquals('unknown', $this->result->getBrowserTitle());
-
+        
         // Test default boolean values
         $this->assertFalse($this->result->isBrowserChromeOriginal());
         $this->assertFalse($this->result->isBrowserFirefoxOriginal());
@@ -42,6 +42,11 @@ class UserAgentResultTest extends TestCase
         $this->assertFalse($this->result->isBrowserDesktopMode());
         $this->assertFalse($this->result->is64BitsMode());
         $this->assertFalse($this->result->isResultIos());
+
+        // Test default device type checks
+        $this->assertFalse($this->result->isMobile());
+        $this->assertFalse($this->result->isDesktop());
+        $this->assertFalse($this->result->isTablet());
     }
 
     public function testSettersAndGetters(): void
@@ -86,6 +91,33 @@ class UserAgentResultTest extends TestCase
         $this->assertTrue($this->result->isBrowserDesktopMode());
         $this->assertTrue($this->result->is64BitsMode());
         $this->assertTrue($this->result->isResultIos());
+    }
+
+    public function testDeviceTypeChecks(): void
+    {
+        // Test mobile device
+        $this->result->setDeviceType('mobile');
+        $this->assertTrue($this->result->isMobile());
+        $this->assertFalse($this->result->isDesktop());
+        $this->assertFalse($this->result->isTablet());
+
+        // Test desktop device
+        $this->result->setDeviceType('desktop');
+        $this->assertFalse($this->result->isMobile());
+        $this->assertTrue($this->result->isDesktop());
+        $this->assertFalse($this->result->isTablet());
+
+        // Test tablet device
+        $this->result->setDeviceType('tablet');
+        $this->assertFalse($this->result->isMobile());
+        $this->assertFalse($this->result->isDesktop());
+        $this->assertTrue($this->result->isTablet());
+
+        // Test unknown device
+        $this->result->setDeviceType('unknown');
+        $this->assertFalse($this->result->isMobile());
+        $this->assertFalse($this->result->isDesktop());
+        $this->assertFalse($this->result->isTablet());
     }
 
     public function testToArray(): void
