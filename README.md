@@ -4,6 +4,9 @@ A powerful Symfony bundle for user-agent analysis. It provides accurate detectio
 
 [![Latest Stable Version](https://poser.pugx.org/eprofos/user-agent-analyzer/v/stable)](https://packagist.org/packages/eprofos/user-agent-analyzer)
 [![License](https://poser.pugx.org/eprofos/user-agent-analyzer/license)](https://packagist.org/packages/eprofos/user-agent-analyzer)
+[![Tests](https://github.com/eprofos/user-agent-analyzer/actions/workflows/tests.yml/badge.svg)](https://github.com/eprofos/user-agent-analyzer/actions/workflows/tests.yml)
+[![PHP Version](https://img.shields.io/badge/php-%3E%3D8.3-8892BF.svg)](https://php.net/)
+[![Symfony Version](https://img.shields.io/badge/symfony-%5E7.0-000000.svg)](https://symfony.com/)
 
 ## Features
 
@@ -63,13 +66,16 @@ return [
 
 ```php
 use Eprofos\UserAgentAnalyzerBundle\Service\UserAgentAnalyzer;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class YourController
 {
-    public function someAction(UserAgentAnalyzer $analyzer)
-    {
-        // Get user agent string
-        $userAgent = $_SERVER['HTTP_USER_AGENT'];
+    public function someAction(
+        UserAgentAnalyzer $analyzer,
+        RequestStack $requestStack
+    ) {
+        // Get user agent string from current request
+        $userAgent = $requestStack->getCurrentRequest()->headers->get('User-Agent');
         
         // Analyze user agent
         $result = $analyzer->analyze($userAgent);
@@ -89,29 +95,43 @@ class YourController
 ### Advanced Usage with Touch Support Mode
 
 ```php
-// Enable touch support mode for better mobile device detection
-$result = $analyzer->analyze($userAgent, true);
+use Symfony\Component\HttpFoundation\Request;
 
-// Check for specific browser features
-$isWebView = $result->getBrowserAndroidWebview() || $result->getBrowserIosWebview();
-$isDesktopMode = $result->getBrowserDesktopMode();
-$is64Bit = $result->getBits64Mode();
+class YourController
+{
+    public function someAction(
+        UserAgentAnalyzer $analyzer,
+        Request $request
+    ) {
+        // Get user agent and analyze with touch support
+        $userAgent = $request->headers->get('User-Agent');
+        $result = $analyzer->analyze($userAgent, true);
+
+        // Check for specific browser features
+        $isWebView = $result->getBrowserAndroidWebview() || $result->getBrowserIosWebview();
+        $isDesktopMode = $result->getBrowserDesktopMode();
+        $is64Bit = $result->getBits64Mode();
+    }
+}
 ```
 
 ### With Logging
 
 ```php
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class YourService
 {
     public function __construct(
         private UserAgentAnalyzer $analyzer,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
+        private RequestStack $requestStack,
     ) {}
 
-    public function analyzeUserAgent(string $userAgent)
+    public function analyzeCurrentUserAgent(): UserAgentResult
     {
+        $userAgent = $this->requestStack->getCurrentRequest()->headers->get('User-Agent');
         return $this->analyzer->analyze($userAgent);
         // Logs will automatically be generated with PSR-3 logger
     }
@@ -146,6 +166,19 @@ class YourService
 
 ```bash
 composer test
+```
+
+## Quality Tools
+
+```bash
+# Run PHP CS Fixer
+composer cs-fix
+
+# Run PHPStan
+composer phpstan
+
+# Run all quality tools
+composer analyze
 ```
 
 ## Contributing
