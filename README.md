@@ -6,7 +6,7 @@ A powerful Symfony bundle for user-agent analysis. It provides accurate detectio
 [![License](https://poser.pugx.org/eprofos/user-agent-analyzer/license)](https://packagist.org/packages/eprofos/user-agent-analyzer)
 [![Tests](https://github.com/eprofos/user-agent-analyzer/actions/workflows/tests.yml/badge.svg)](https://github.com/eprofos/user-agent-analyzer/actions/workflows/tests.yml)
 [![PHP Version](https://img.shields.io/badge/php-%3E%3D8.2-8892BF.svg)](https://php.net/)
-[![Symfony Version](https://img.shields.io/badge/symfony-%5E7.0-000000.svg)](https://symfony.com/)
+[![Symfony Version](https://img.shields.io/badge/symfony-%3E%3D7.0-000000.svg)](https://symfony.com/)
 
 ## Features
 
