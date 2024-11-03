@@ -118,6 +118,48 @@ class YourController
 }
 ```
 
+### Twig Functions
+
+The bundle provides several Twig functions for easy device and OS detection in your templates:
+
+```twig
+{# Device Type Detection #}
+{% if is_mobile() %}
+    {# Mobile-specific content #}
+{% endif %}
+
+{% if is_desktop() %}
+    {# Desktop-specific content #}
+{% endif %}
+
+{% if is_tablet() %}
+    {# Tablet-specific content #}
+{% endif %}
+
+{# Operating System Detection #}
+{% if is_android() %}
+    {# Android-specific content #}
+{% endif %}
+
+{% if is_windows() %}
+    {# Windows-specific content #}
+{% endif %}
+
+{% if is_linux() %}
+    {# Linux-specific content #}
+{% endif %}
+
+{% if is_ios() %}
+    {# iOS-specific content #}
+{% endif %}
+
+{% if is_macos() %}
+    {# macOS-specific content #}
+{% endif %}
+```
+
+All Twig functions automatically analyze the current request's User-Agent string and return a boolean value indicating whether the condition is met.
+
 ## Available Methods
 
 ### Operating System Information
