@@ -190,43 +190,6 @@ All Twig functions automatically analyze the current request's User-Agent string
 - `isBrowserDesktopMode()`: Check if desktop mode
 - `is64BitsMode()`: Check if 64-bit mode
 
-## Testing
-
-```bash
-composer test
-```
-
-## Quality Tools
-
-```bash
-# Run PHP CS Fixer
-composer cs-fix
-
-# Run PHPStan
-composer phpstan
-
-# Run all quality tools
-composer analyze
-```
-
-## Contributing
-
-Feel free to contribute to this bundle by submitting issues and pull requests.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This bundle is released under the MIT License. See the bundled [LICENSE](LICENSE) file for details.
-
-## Credits
-
-Developed by [Eprofos](https://www.eprofos.com).
-- `is64BitsMode()`: Check if 64-bit mode
 
 ## Testing
 
